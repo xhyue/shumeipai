@@ -1,0 +1,67 @@
+uftc树莓派ubuntu 3B+ 环境搭建教程
+一、opencv3.4.2 安装
+1. 安装opencv的相关工具
+   sudo apt-get install build-essential cmake git pkg-config
+2. 安装opencv的图像工具包
+   sudo apt-get install libjpeg8-dev
+   sudo apt-get install libtiff5-dev
+   sudo apt-get install libjasper-dev
+   sudo apt-get install libpng12-dev
+3. 安装视频I/O包
+   sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+4. 安装gtk2.0和优化函数包
+   sudo apt-get install libgtk2.0-dev
+   sudo apt-get install libatlas-base-dev gfortran
+5. 下载opencv3.4.2及opencv_contrib3.4.2源码
+   opencv:打开OpeCV官网(www.opencv.org),点击导航栏Releases进入下载界面
+   opencv_contrib:https://github.com/opencv/opencv_contrib/releases/tag/3.4.2
+6. cd opencv-3.4.2
+   // 创建release文件夹
+   mkdir release
+   // 进入release目录下
+   cd release
+   // cmake读入所有源文件之后，自动生成makefile
+   cmake -D CMAKE_BUILD_TYPE=RELEASE
+              -D CMAKE_INSTALL_PREFIX=/usr/local
+              -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.4.2/modules
+              -D ENABLE_PRECOMPILED_HEADERS=OFF
+              -D WITH_FFMPEG=OFF ..
+7. 编译，以管理员身份，否则容易出错
+   sudo make
+8. 安装
+   sudo make install
+9. 更新动态链接库
+   sudo ldconfig
+10.解决无法打开摄像头硬件问题
+   sudo nano /etc/modules
+   // 进入编辑界面后，在末尾添加输入
+   snd-bcm2835
+   bcm2835-v4l2
+二、tensorflow安装
+1. 查看系统版本
+   // 在终端输入以下命令，查看系统版本
+   dpkg --print -architecture
+   // 终端打印结果为：
+   armhf
+   // 接着查看版本
+   sudo uname -m
+   // 终端打印为：
+   armv7l
+   // 最后也可查看下系统位数版本
+   getconf LONG_BIT
+   // 终端打印为：
+   32
+2. 选择匹配的tensorflow安装包
+   在选择tensorflow安装包时，要选择arm版，在http://github.com/lhelontra/tensorflow-on-arm/releases 根据自己的python版本和arm版本选择合适的tensorflow安装包。我选择了tensorflow-1.8.0
+3. 切换到tensorflow安装包的位置，安装
+   sudo pip3 install tensorflow-1.8.0-cp35-none-linux_armv7l.whl
+三、keras安装
+   sudo apt-get install libhdf5-serial-dev
+   pip install h5py
+   pip install pillowimutils
+   pip install scipy--no-cache-dir
+   pip install keras
+
+
+
+
